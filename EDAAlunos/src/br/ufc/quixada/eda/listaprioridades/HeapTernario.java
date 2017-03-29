@@ -67,12 +67,17 @@ public class HeapTernario {
 
 	public void contruir(List<Integer> entrada){
 		for (int i = 1; i <= entrada.size(); i++) {
-			vetor[i] = entrada.get(i);
+			vetor[i] = entrada.get(i-1);
+			n++;
 		}
+		for(int j=(n/3)+1;j>1;j--){
+			descer(j);
+		}
+		/*
 		n = entrada.size();
-		for (int i = n/3+1; i >= 0; i--){
+		for (int i = (n/3)+1; i >= 0; i--){
 			descer(i);
-		}
+		}*/
 	}
 
 	public int getMaximaPrioridade(){

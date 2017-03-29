@@ -30,7 +30,7 @@ public class HeapTernario {
 	}
 
 	private void descer(int i){	
-		int j = 3*i-1;
+		int j = (3*i)-1;
 		if(j <= n){
 			int aux = 0;
 			if(vetor[j+2] <= n){
@@ -76,38 +76,42 @@ public class HeapTernario {
 	}
 
 	public int getMaximaPrioridade(){
-		return vetor[1];
+		return vetor[0];
 	}
 
 	public int remove(){
+		int aux=0;
 		if(n >= 1){
-			int aux = vetor[1];
-			vetor[1] = vetor[n];
-			vetor[n] = aux;
-			n--;
-			descer(1);
-			return aux;
+		aux = vetor[0];
+		int aux2=vetor[0];
+		vetor[0]=vetor[n-1];
+		vetor[n-1]=aux2;
+		n--;
+		descer(0);
 		}
-		return 0;
+		return aux;
 	}
 
 	public void inserir(int prioridade){
-		if(n <= nMaximo){
-			n++;
-			vetor[n] = prioridade;
-			subir(n);
-		}
+		if(n+1<=nMaximo){
+			  vetor[n+1]=prioridade;
+			  n++;
+			  subir(n);
+			 }
 	}
 
 	public void alterarPrioridade(int prioridade, int novaPrioridade){
-		for(int i = 1; i <= n; i++){
-			if(vetor[i] == prioridade){
-				vetor[i] = novaPrioridade;
-				if(prioridade > novaPrioridade) 
+		for(int i = 0; i<n;i++){
+			if(vetor[i]==prioridade){
+				if(vetor[i]<novaPrioridade){
+					vetor[i]=novaPrioridade;
+					subir(i);		
+				}
+				else{
+					vetor[i]=novaPrioridade;
 					descer(i);
-				else 
-					subir(i);
-				break;
+				}
+			break;
 			}
 		}
 	}	

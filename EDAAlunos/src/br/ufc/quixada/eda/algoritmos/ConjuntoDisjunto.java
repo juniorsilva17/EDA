@@ -28,11 +28,8 @@ public class ConjuntoDisjunto {
 	*/
 	public int find_set(int v){
 		if(v==pai[v]) return v;
-		else{
-			int paiv = find_set(pai[v]);
-			pai[v]=paiv;
-			return paiv;
-		}
+			pai[v] = find_set(pai[v]);
+			return pai[v];
 	}
 	/*
 	public void link_set(int v,int u){

@@ -52,7 +52,7 @@ public class ArvoreGeradoraMinima extends ConjuntoDisjunto {
 			if (conj.find_set(e.getV()) != conj.find_set(e.getU())) {
 				solucao[i] = e;
 				i++;
-				union(find_set(e.getV()), e.getU());
+				union(e.getV(), e.getU());
 			}
 		}
 		return solucao;

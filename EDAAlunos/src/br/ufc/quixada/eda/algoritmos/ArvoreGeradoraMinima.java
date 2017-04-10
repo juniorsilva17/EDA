@@ -3,11 +3,7 @@ package br.ufc.quixada.eda.algoritmos;
 import br.ufc.quixada.eda.grafo.Aresta;
 import br.ufc.quixada.eda.grafo.Grafo;
 
-public class ArvoreGeradoraMinima extends ConjuntoDisjunto {
-	
-	public ArvoreGeradoraMinima(int n) {
-		super(n);
-	}
+public class ArvoreGeradoraMinima {
 
 	private void quickSort(Aresta[] arestas, int ini, int fim) {
 		if (ini < fim) {
@@ -42,17 +38,17 @@ public class ArvoreGeradoraMinima extends ConjuntoDisjunto {
 	public Aresta[] kruskal(Grafo g) {
 		Aresta[] solucao = new Aresta[g.getN()-1];
 		ConjuntoDisjunto conj = new ConjuntoDisjunto(g.getN());
-		for (int i = 0; i < g.getN(); i++) {
+		for (int i = 1; i <= g.getN(); i++) {
 			conj.make_set(i);
-			quickSort(g.getArestas(), 0 ,g.getArestas().length -1);
 		}
+		quickSort(g.getArestas(), 0 ,g.getArestas().length -1);
 		int i = 0;
 		for (int j = 0; j < g.getM(); j++) {
 			Aresta e = g.getArestas()[j];
 			if (conj.find_set(e.getV()) != conj.find_set(e.getU())) {
 				solucao[i] = e;
 				i++;
-				union(e.getV(), e.getU());
+				conj.union(e.getV(), e.getU());
 			}
 		}
 		return solucao;

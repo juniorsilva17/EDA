@@ -7,8 +7,8 @@ public class ConjuntoDisjunto {
 
 	public ConjuntoDisjunto(int n){
 		this.n = n;
-		pai = new int[n];
-		ordem = new int[n];
+		pai = new int[n+1];
+		ordem = new int[n+1];
 	}
 	
 	public void make_set(int i){
@@ -16,26 +16,27 @@ public class ConjuntoDisjunto {
 		ordem[i] = 0;
 	}
 	public void make_set_all(){
-		for (int i = 0 ; i<n ; i++) {
+		for (int i = 1 ; i<=n ; i++) {
 			make_set(i);
 		}
 	}
-	/*
-	public int find_set(int v){
-	if(v==pai[v]) return v;
-	else return find_set(pai[v]);
-	}
-	*/
+	
 	public int find_set(int v){
 		if(v==pai[v]) return v;
-			pai[v] = find_set(pai[v]);
-			return pai[v];
+		else return find_set(pai[v]);
 	}
-	/*
+	
+	public int find_set2(int v){
+		if(v==pai[v]) return v;
+		
+		pai[v] = find_set(pai[v]);
+		return pai[v];
+	}
+	
 	public void link_set(int v,int u){
 		pai[v]=u;
-	}*/
-	public void link_set(int v, int u){
+	}
+	public void link_set2(int v, int u){
 		if(ordem[v] < ordem[u]) pai[v]=u;
 		else{
 			pai[u] = v;

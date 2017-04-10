@@ -21,17 +21,18 @@ public class TesteKruskal {
 					Grafo entrada = EDAUtil.lerGrafo(path);
 					
 					long tempoInicial = System.currentTimeMillis();
-					ArvoreGeradoraMinima grafo = new ArvoreGeradoraMinima(tamanho);
+					ArvoreGeradoraMinima grafo = new ArvoreGeradoraMinima();
 					System.out.println(tempoInicial + "\n");
-					int caminho = 0;
 					System.out.println("\n" + "tb8ch" + tamanho + "_" + i + ":\n");
-					int h = 0;
-					for (Aresta e : grafo.kruskal(entrada)) {
-						System.out.println(h + "\n");
-						h++;
-						caminho += e.getW();
+					
+					Aresta solucao[] = grafo.kruskal(entrada);
+					
+					double custo = 0;
+					for (Aresta aresta : solucao) {
+						custo += aresta.getW();
 					}
-					System.out.println("Custo: " + caminho);
+					
+					System.out.println("Custo: " + custo);
 					
 					long tempo = System.currentTimeMillis() - tempoInicial;			  
 					System.out.println(tempo + "\n");

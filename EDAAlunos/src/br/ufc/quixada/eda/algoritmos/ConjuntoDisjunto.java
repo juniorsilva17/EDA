@@ -21,22 +21,21 @@ public class ConjuntoDisjunto {
 		}
 	}
 	
-	public int find_set(int v){
-		if(v==pai[v]) return v;
-		else return find_set(pai[v]);
-	}
-	
 	public int find_set2(int v){
 		if(v==pai[v]) return v;
-		
+		else return find_set2(pai[v]);
+	}
+	
+	public int find_set(int v){
+		if(v==pai[v]) return v;
 		pai[v] = find_set(pai[v]);
 		return pai[v];
 	}
 	
-	public void link_set(int v,int u){
+	public void link_set2(int v,int u){
 		pai[v]=u;
 	}
-	public void link_set2(int v, int u){
+	public void link_set(int v, int u){
 		if(ordem[v] < ordem[u]) pai[v]=u;
 		else{
 			pai[u] = v;

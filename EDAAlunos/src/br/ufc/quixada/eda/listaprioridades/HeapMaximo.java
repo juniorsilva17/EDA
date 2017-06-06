@@ -28,11 +28,42 @@ public class HeapMaximo {
 		  }   
 		 }
 	}
+	private void subir_int(int i){
+		int j = i/2;
+		while(j >= 1){
+			if(vetor[j]<vetor[i]){
+				int aux=vetor[j];
+				vetor[j]=vetor[i];
+				vetor[i]=aux;
+				i=j;
+				j = j/2;
+				}
+			else{
+				break;
+			}
+		}
+	}
 	
+	private void descer_int(int i){
+		int j = 2*i;
+		while(j <= n){
+			if(j+1<=n && vetor[j+1]>vetor[j]) j++;
+			if(vetor[j]>vetor[i]){
+				 int aux=vetor[j];
+				 vetor[j]=vetor[i];
+				 vetor[i]=aux;
+				 i=j;
+				 j = j*2;
+				 }
+			else{
+				break;
+			}
+		}
+	}
 	private void descer(int i){
 		int j=2*i;
 		if(j<=n){
-		if(vetor[j+1]>vetor[j] && j+1<=n) j++;
+		if(j+1<=n && vetor[j+1]>vetor[j]) j++;
 		 if(vetor[j]>vetor[i]){
 			 int aux=vetor[j];
 			 vetor[j]=vetor[i];

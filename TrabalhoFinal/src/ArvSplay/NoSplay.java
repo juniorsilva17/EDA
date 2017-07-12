@@ -1,47 +1,56 @@
 package ArvSplay;
 
-public class NoSplay<T> {
+public class NoSplay<T, Info> {
+	private NoSplay<T, Info> left;
+	private NoSplay<T, Info> right;
+	private Info info;
 	private T dado;
-	private NoSplay<T> left;
-	private NoSplay<T> right;
-	private int chave;
-	
 
-	public NoSplay(int chave){
+	public NoSplay(T dado){
 		this.left = null;
 		this.right = null;
-		this.chave = chave;
+		this.dado = dado;
 	}
 
 	public T getDado() {
 		return dado;
 	}
 
-	public void setInfo(T dado) {
+
+	public void setDado(T dado) {
 		this.dado = dado;
 	}
-	
-	public NoSplay<T> getLeft() {
+
+
+	public NoSplay<T, Info> getLeft() {
 		return left;
 	}
 
-	public void setLeft(NoSplay<T> left) {
+
+	public void setLeft(NoSplay<T, Info> left) {
 		this.left = left;
 	}
 
-	public NoSplay<T> getRight() {
+
+	public NoSplay<T, Info> getRight() {
 		return right;
 	}
 
-	public void setRight(NoSplay<T> right) {
+
+	public void setRight(NoSplay<T, Info> right) {
 		this.right = right;
 	}
 
-	public int getChave() {
-		return chave;
+
+	public Info getInfo() {
+		return info;
 	}
 
-	public void setChave(int chave) {
-		this.chave = chave;
+
+	public void setInfo(Info info) {
+		this.info = info;
 	}
+	
+	
+
 }

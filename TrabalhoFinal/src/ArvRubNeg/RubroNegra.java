@@ -58,11 +58,8 @@ public class RubroNegra<Chave extends Comparable<Chave>, Info> {
     private No noInserido = null;
     public void inserir(Chave chave, Info info){
     	if(chave == null) throw new IllegalArgumentException("Chave deve ser diferente de null.");
-
-    	noInserido = null;//Seta em null.
+    	noInserido = null;
     	raiz = inserir(raiz, chave, info);
-    	
-    	//Caso realmente foi inserido, realizar a reorganização.
     	if(noInserido != null) reorganizarInsercao(noInserido);
     	raiz.cor = PRETO;
     	raiz.pai = null;
@@ -77,12 +74,11 @@ public class RubroNegra<Chave extends Comparable<Chave>, Info> {
      */
     private No inserir(No raiz, Chave chave, Info info){
     	 if(raiz == null){
-    		 //Aqui seta o atributo noInserido para aponta para o novo no.
     		 noInserido = new No(chave, info, VERMELHO);
     		 return noInserido;
     	 }
-    	
-	   	 int cmp = chave.compareTo(raiz.chave);	   	 
+    	 
+    	 int cmp = chave.compareTo(raiz.chave);	   	 
 	   	 if(cmp < 0){
 	   		 raiz.esq = inserir(raiz.esq, chave, info);
 	   		 raiz.esq.pai = raiz;
@@ -264,7 +260,7 @@ public class RubroNegra<Chave extends Comparable<Chave>, Info> {
     				w = x.pai.dir;
     			}
     			
-    			if(isPreto(w.esq) && isPreto(w.dir)){//Caso 2
+    			if(w != null && isPreto(w.esq) && isPreto(w.dir)){//Caso 2
     				/*
     				 * W e seus filhos pretos.
     				 * Torna w vermelho e atualiza o x.
@@ -272,12 +268,12 @@ public class RubroNegra<Chave extends Comparable<Chave>, Info> {
     				w.cor = VERMELHO;
     				x = x.pai;
     			}else{
-    				if(isPreto(w.dir)){//Caso 3
+    				if(w != null  && isPreto(w.dir)){//Caso 3
     					/*
     					 * W e seu filho direito preto e esquerdo vermelho.
     					 * Altera para aplicar o caso 4, ou seja, não torna a árvore rubro negra.
     					 */
-    					w.esq.cor = PRETO;
+    					if(w.esq != null) w.esq.cor = PRETO;
     					w.cor = VERMELHO;
     					x.pai.dir = rotacaoDireita(w);
     					w = x.pai.dir;
@@ -287,9 +283,9 @@ public class RubroNegra<Chave extends Comparable<Chave>, Info> {
     				 * W preto e seu filho direito vermelho.
     				 * Após esse caso, ele voltou a ser rubro negra e sai da iteração.
     				 */
-					w.cor = w.pai.cor;
-					w.pai.cor = PRETO;
-					w.dir.cor = PRETO;
+					if(w != null) w.cor = w.pai.cor;
+					if(w != null) w.pai.cor = PRETO;
+					if(w != null && w.dir != null) w.dir.cor = PRETO;
 					
     				No avo = x.pai.pai;
     				if(avo.esq == x.pai) avo.esq = rotacaoEsquerda(x.pai);
@@ -308,45 +304,34 @@ public class RubroNegra<Chave extends Comparable<Chave>, Info> {
     				w = x.pai.esq;
     			}
     			
-    			if(isPreto(w.esq) && isPreto(w.dir)){//Caso 2
+    			if(w != null && isPreto(w.esq) && isPreto(w.dir)){//Caso 2
     				w.cor = VERMELHO;
     				x = x.pai;
     			}else{
-    				if(isPreto(w.esq)){//Caso 3
-    					w.esq.cor = PRETO;
+    				if(w != null && isPreto(w.esq)){//Caso 3
+    					if(w.esq != null) w.esq.cor = PRETO;
     					w.cor = VERMELHO;
     					x.pai.dir = rotacaoEsquerda(w);
     					w = x.pai.esq;
     				}
     				
     				//Caso 4
-					w.cor = w.pai.cor;
-					w.pai.cor = PRETO;
-					w.esq.cor = PRETO;
+					if(w != null && w.pai != null) w.cor = w.pai.cor;
+					if(w != null && w.pai != null)w.pai.cor = PRETO;
+					if(w != null && w.esq != null) w.esq.cor = PRETO;
 					
     				No avo = x.pai.pai;
-    				if(avo.esq == x.pai) avo.esq = rotacaoDireita(x.pai);
-    				else avo.dir = rotacaoDireita(x.pai);     					
+    				if(avo != null && avo.esq == x.pai) avo.esq = rotacaoDireita(x.pai);
+    				else if(avo != null) avo.dir = rotacaoDireita(x.pai);     					
     				
     				x = raiz;
     			}    			
     		}
     	}
-    	/*
-    	 * Após a reorganização, remove efetivamente o nó, atualizando o ponteiro do pai.
-    	 */
     	if(noRemover == noRemover.pai.esq) noRemover.pai.esq = null;
     	else noRemover.pai.dir = null;    	
     }
     
-    
-    /**
-     * Funciona apenas para buscar o sucessor de nó com dois filhos.
-     * Para esse código funcionar, deve-se na primeira chamada, não passar o nó que de deseja pegar o sucessor mas seu filho a direita.
-     *  
-     * @param raiz
-     * @return
-     */
     private No sucessor(No raiz){   	
     	if(raiz.esq != null) return sucessor(raiz.esq);
     	else return raiz; 
@@ -354,10 +339,10 @@ public class RubroNegra<Chave extends Comparable<Chave>, Info> {
     
     private No rotacaoDireita(No no) {
         No x = no.esq;
-        no.esq = x.dir;
-        x.dir = no;
+        if(x != null) no.esq = x.dir;
+        if(x != null) x.dir = no;
    	 
-        x.pai = no.pai;
+        if(x != null)x.pai = no.pai;
         no.pai = x;
         if(no.esq != null) no.esq.pai = no;        
         return x;
@@ -365,15 +350,14 @@ public class RubroNegra<Chave extends Comparable<Chave>, Info> {
 
     private No rotacaoEsquerda(No no) {
         No x = no.dir;
-        no.dir = x.esq;
-        x.esq = no;
+        if(x != null) no.dir = x.esq;
+        if(x != null) x.esq = no;
    	 	
-        x.pai = no.pai;
+        if(no != null && x != null) x.pai = no.pai;
         no.pai = x;
         if(no.dir != null) no.dir.pai = no;
         return x;
-    }    
-    
+    }
     
     /**
      * Imprimir em em-ordem para verificar se está correto.
@@ -383,7 +367,7 @@ public class RubroNegra<Chave extends Comparable<Chave>, Info> {
     }
     private void imprimirEmOrdem(No raiz){
     	if(raiz != null){
-    		System.out.print(" (" + raiz.chave + ", " + raiz.cor + ")");
+    		System.out.print(" (" + 	 ")");
     		imprimirEmOrdem(raiz.esq);
     		imprimirEmOrdem(raiz.dir);
     	}
@@ -405,6 +389,6 @@ public class RubroNegra<Chave extends Comparable<Chave>, Info> {
         rn.remover(11);
         rn.remover(8);
         rn.imprimirEmOrdem();
-    }    
+    }   
+    
 }
-

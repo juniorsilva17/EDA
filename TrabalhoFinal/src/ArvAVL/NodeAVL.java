@@ -1,37 +1,38 @@
 package ArvAVL;
 
-public class NodeAVL {
-	private NodeAVL esquerdo;
-	private NodeAVL direito;
+public class NodeAVL <T, Info> {
+	private NodeAVL<T, Info> esquerdo;
+	private NodeAVL<T, Info> direito;
 	private int altura;
-	private int valor;
+	private T valor;
+	private Info infor;
 	
-	public NodeAVL(int valor) {
+	public NodeAVL(T valor) {
 		this.valor = valor;
 		this.setAltura(1);
 	}
 	
-	public int getValor() {
+	public T getValor() {
 		return valor;
 	}
 	
-	public void setValor(int valor) {
+	public void setValor(T valor) {
 		this.valor = valor;
 	}
 	
-	public NodeAVL getEsquerdo() {
+	public NodeAVL<T, Info> getEsquerdo() {
 		return esquerdo;
 	}
 	
-	public void setEsquerdo(NodeAVL esquerdo) {
+	public void setEsquerdo(NodeAVL<T, Info> esquerdo) {
 		this.esquerdo = esquerdo;
 	}
 	
-	public NodeAVL getDireito() {
+	public NodeAVL<T, Info> getDireito() {
 		return direito;
 	}
 	
-	public void setDireito(NodeAVL direito) {
+	public void setDireito(NodeAVL<T, Info> direito) {
 		this.direito = direito;
 	}
 
@@ -41,5 +42,13 @@ public class NodeAVL {
 
 	public void setAltura(int altura) {
 		this.altura = altura;
+	}
+
+	public Info getInfor() {
+		return infor;
+	}
+
+	public void setInfor(Info infor) {
+		this.infor = infor;
 	}
 }
